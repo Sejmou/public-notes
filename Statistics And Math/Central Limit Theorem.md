@@ -1,0 +1,6 @@
+The Central Limit Theorem (CLE) is one of the most important concepts in Statistics. It states that the distribution of the sample mean of a large enough sample from any population, regardless of the shape of the population distribution, will be approximately normally distributed.
+
+Alternative formulation copied straight from [Wikipedia](https://en.wikipedia.org/wiki/Central_limit_theorem):
+
+>In many situations, for [independent and identically distributed random variables](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables "Independent and identically distributed random variables"), the [sampling distribution](https://en.wikipedia.org/wiki/Sampling_distribution "Sampling distribution") of the [standardized](https://en.wikipedia.org/wiki/Standard_score "Standard score") [sample mean](https://en.wikipedia.org/wiki/Sample_mean_and_covariance "Sample mean and covariance") tends towards the [standard normal distribution](https://en.wikipedia.org/wiki/Normal_distribution#Standard_normal_distribution "Normal distribution") even if the original variables themselves are not [normally distributed](https://en.wikipedia.org/wiki/Normal_distribution "Normal distribution").
+

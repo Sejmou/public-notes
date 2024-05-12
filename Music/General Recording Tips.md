@@ -1,0 +1,3 @@
+- Make sure to use correct impedance/input levels for the type of thing you're recording!
+	- Switch input to INST on Focusrite Scarlett when plugging in a guitar ([what does it do exactly?](https://youtu.be/rK6fYn-s-9w))!
+- 

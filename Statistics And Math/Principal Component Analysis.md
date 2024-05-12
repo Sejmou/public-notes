@@ -1,0 +1,2 @@
+Principal Component Analysis (PCA) can resolve the issue of multi-collinearity. Correlated variables are transformed into a different 'coordinate system'. This coordinate system has the same dimensionality as the original one. However, IIUC, each dimension (principal component) is a linear combination of the original dimensions. All dimensions are orthogonal to each other and ordered by their variance. Hence, for datasets with a lot of multi-collinearity we can use just the first few components (instead of all of them), as they capture the variation in the data effectively.
+

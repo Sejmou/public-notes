@@ -1,0 +1,1 @@
+the mean is not simply _the mean_, there's different [types of means](https://en.wikipedia.org/wiki/Mean#Types_of_means). Most often, however, we mean the arithmetic mean lol

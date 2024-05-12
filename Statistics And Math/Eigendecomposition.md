@@ -1,0 +1,1 @@
+prerequisite: square matrix (otherwise, no Eigenvalues or Eigenvectors exist).

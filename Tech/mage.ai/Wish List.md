@@ -1,0 +1,4 @@
+- don't persist global/pipeline variables per default
+- set `execution_date` as pipeline variable
+- define list of accepted values for pipeline variables
+- datatypes for pipeline variables

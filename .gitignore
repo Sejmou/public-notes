@@ -1,0 +1,7 @@
+# exclude workspace cache
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# exclude OS settings and caches
+.trash/
+.DS_Store
