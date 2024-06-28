@@ -1,0 +1,1 @@
+An A record is the most basic type of DNS record

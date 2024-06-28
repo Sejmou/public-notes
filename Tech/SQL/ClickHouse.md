@@ -53,6 +53,18 @@ DESCRIBE TABLE
     );
 ```
 
+### Get data from query logs
+```sql
+-- Gets log data for all insert queries involving two particular tables
+SELECT event_time, query_id, query, tables
+FROM system.query_log
+WHERE type = 'QueryFinish' 
+  AND query LIKE 'INSERT INTO%' 
+  AND has(tables, 'db_a.table_x')
+  AND has(tables, 'db_b.table_b')
+-- vertical format makes it easier to read queries
+FORMAT Vertical;
+```
 ### Date Ranges
 
 At the moment, ClickHouse has no built-in functions for creating date ranges (see also [discussion](https://github.com/ClickHouse/ClickHouse/issues/47041) on GitHub). So we have to create them manually.

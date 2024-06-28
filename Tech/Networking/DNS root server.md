@@ -1,0 +1,4 @@
+![Source: https://www.cloudflare.com/img/learning/dns/glossary/dns-root-server/dns-root-server.png](Pasted%20image%2020240612130138.png)
+As the picture above demonstrates, the root server is the first server that is queried if a client wants to resolve a particular domain name. The root server can then in turn reach out to the responsible TLD server, which then reaches out to the server for the subdomain. There can be several levels of subdomains. For each subdomain, there is another nameserver, until finally the authoritative nameserver for the desired domain is reached, which responds with the IP address.
+
+There are only 13 root server addresses. However, this (of course) does NOT mean that there are only 13 root servers. During DNS lookup, any recursive resolver reaches out to one of those 13 root server addresses (they are all 'hardcoded' into any resolver).
