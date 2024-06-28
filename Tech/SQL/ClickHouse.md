@@ -120,6 +120,15 @@ FROM
 ### special features/functions
 `asssumeNotNull`: define as non-nullable
 `anyHeavy`: pick 'most common' (approximately!) value
+
+## Reset Schema Inference Cache
+For files, including files on S3, ClickHouse caches the inferred schemas. This means that sometimes we get back incomplete stuff from `DESCRIBE TABLE s3(...)` statements as the cache has stored an outdated schema.
+
+To make inference run again, there's apparently no other solution than deleting the whole cache, which can be done by running
+```sql
+SYSTEM DROP SCHEMA CACHE FOR S3;
+```
+
 ## Server
 ### Run from Docker image 
 with custom config, exposing all network ports (better performance than exposing selected ports with `-p`), AND persisting data
