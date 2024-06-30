@@ -128,7 +128,33 @@ To make inference run again, there's apparently no other solution than deleting 
 ```sql
 SYSTEM DROP SCHEMA CACHE FOR S3;
 ```
+## Readable `DESCRIBE TABLE` (also works nicely for S3 files w/ deep nesting!)
+```sql
+DESCRIBE TABLE s3('...')
+SETTINGS
+  -- skips irrelevant columns (i.e. NOT colname/datatype)
+  describe_compact_output = 1,
+  -- uncomment if you're not that interested in nested columns
+  -- adds another column 'is_subcolumn'; those with value 1 are actual subcolumns
+  -- nullable columns are also printed as subcolumns (regular value and null)
+  describe_include_subcolumns = 1
+FORMAT TabSeparated;
+```
+## Create new DB user w/ sufficient permissions for regular ETL-tasks
+```sql
+CREATE USER username IDENTIFIED BY 'password';
 
+GRANT
+  SELECT,
+  INSERT,
+  -- clickhouse client shows error on connection to DB without this - not sure why it is needed exactly lol
+  addressToLineWithInlines
+  -- certain types of queries require this permission, don't remember exactly which ones
+  CREATE TEMPORARY TABLE,
+  -- needed for interacting with files in S3 storage
+  S3
+ON *.* TO username;
+```
 ## Server
 ### Run from Docker image 
 with custom config, exposing all network ports (better performance than exposing selected ports with `-p`), AND persisting data
