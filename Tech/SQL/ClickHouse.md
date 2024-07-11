@@ -121,6 +121,22 @@ FROM
 `asssumeNotNull`: define as non-nullable
 `anyHeavy`: pick 'most common' (approximately!) value
 
+## Adding row numbers for result set
+For this, we can use `rowNumberInAllBlocks()`
+
+Example query:
+```sql
+SELECT priority, min(rowNumberInAllBlocks()) AS row_num FROM (SELECT * FROM to_fetch ORDER BY priority, popularity) GROUP BY priority;
+/*
+example output:
+┌─priority─┬─row_num─┐
+│        1 │       0 │
+│        2 │   20517 │
+└──────────┴─────────┘
+*/
+```
+
+See also [this](https://github.com/ClickHouse/ClickHouse/issues/3353) discussion
 ## Reset Schema Inference Cache
 For files, including files on S3, ClickHouse caches the inferred schemas. This means that sometimes we get back incomplete stuff from `DESCRIBE TABLE s3(...)` statements as the cache has stored an outdated schema.
 
