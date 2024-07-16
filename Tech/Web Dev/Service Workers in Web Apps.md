@@ -1,3 +1,4 @@
+NOTE: the notes here rely more on how to interact with service workers from within a SvelteKit app, however several takeaways also apply to service workers in general and are probably useful for when you want to use them w/ vanilla JS or other frameworks as well.
 ## Lifecycle
 Any service worker passes multiple stages during its 'lifecycle'
 
