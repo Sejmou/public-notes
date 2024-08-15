@@ -5,7 +5,6 @@ Any service worker passes multiple stages during its 'lifecycle'
 1. Registration: The browser downloads and parses the service worker file. If everything's fine we proceed with
 2. Installation: The service worker's `install` event fires. By attaching a listener for that `install` event, we can make sure that any setup logic for the service worker is executed (most notably caching files/assets) 
 3. Activation: A service worker can only start managing a page that registered it _after_ you navigate to that page again by reloading or reopening the PWA
-
 ## Listening for events
 we can reference the service worker via the `self` keyword (in SvelteKit, we can reassign `self` to `sw` for [typesafety purposes](https://kit.svelte.dev/docs/service-workers#type-safety))
 
@@ -22,3 +21,6 @@ self.addEventListener('install', (event) => {
 	event.waitUntil(addFilesToCache());
 });
 ```
+
+## Deep dive (updates, scopes, etc.)
+See [this](https://web.dev/articles/service-worker-lifecycle) article nicely explains stuff about worker lifecycle etc. in much more detail

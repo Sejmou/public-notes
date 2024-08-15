@@ -65,6 +65,13 @@ WHERE type = 'QueryFinish'
 -- vertical format makes it easier to read queries
 FORMAT Vertical;
 ```
+
+### Materialized views
+#### Check for update status in refreshable materialized view
+```sql
+SELECT * FROM system.view_refreshes WHERE database = 'db' AND view = 'name_of_the_mv';
+```
+
 ### Date Ranges
 
 At the moment, ClickHouse has no built-in functions for creating date ranges (see also [discussion](https://github.com/ClickHouse/ClickHouse/issues/47041) on GitHub). So we have to create them manually.
@@ -117,6 +124,21 @@ FROM
   relevant_days;
 ```
 
+#### Consecutive dates from some reference date
+This example query creates a dates for `2024-07-07` and the 6 days before it, in ascending order:
+```sql
+WITH
+toDate('2024-07-07') AS reference_date,
+days AS (
+    SELECT arrayJoin(
+      reverse(
+        arrayMap(x -> addDays(reference_date, -x), range(7))
+        )
+    ) AS date
+)
+SELECT *
+FROM days
+```
 ### special features/functions
 `asssumeNotNull`: define as non-nullable
 `anyHeavy`: pick 'most common' (approximately!) value
