@@ -1,0 +1,1 @@
+Just download [Cursorcerer](https://doomlaser.com/cursorcerer-hide-your-cursor-at-will/)!
