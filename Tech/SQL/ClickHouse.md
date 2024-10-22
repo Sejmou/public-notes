@@ -193,6 +193,61 @@ GRANT
   S3
 ON *.* TO username;
 ```
+
+### S3Queue engine tables
+#### Check import progress
+```sql
+SELECT
+  file_path,
+  file_name,
+  processing_start_time,
+  processing_end_time
+FROM system.s3queue ORDER BY processing_start_time DESC LIMIT 10;
+```
+
+#### Get details for several imports
+```sql
+SELECT
+  database,
+  table,
+  file_name,
+  processing_start_time,
+  processing_end_time,
+  status, 
+  exception
+FROM system.s3queue_log
+ORDER BY processing_start_time DESC
+LIMIT 10;
+```
+
+## Get details for imports for specific table
+```sql
+SELECT
+  file_name,
+  processing_start_time,
+  processing_end_time,
+  status, 
+  exception
+FROM system.s3queue_log
+WHERE database = 'db'
+AND table = 'table'
+ORDER BY processing_start_time DESC;
+```
+#### Get details for specific import (useful in case of exception)
+```sql
+SELECT
+  database,
+  table,
+  file_name,
+  processing_start_time,
+  processing_end_time,
+  status, 
+  exception
+FROM system.s3queue_log
+ORDER BY processing_start_time DESC
+LIMIT 1
+FORMAT Vertical;
+```
 ## Server
 ### Run from Docker image 
 with custom config, exposing all network ports (better performance than exposing selected ports with `-p`), AND persisting data
