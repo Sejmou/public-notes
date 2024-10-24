@@ -195,7 +195,7 @@ ON *.* TO username;
 ```
 
 ### S3Queue engine tables
-#### Check import progress
+#### Check recent imports
 ```sql
 SELECT
   file_path,
@@ -204,7 +204,20 @@ SELECT
   processing_end_time
 FROM system.s3queue ORDER BY processing_start_time DESC LIMIT 10;
 ```
-
+#### Check recent imports for specific S3 paths
+```sql
+SELECT
+  file_path,
+  file_name,
+  processing_start_time,
+  processing_end_time
+FROM system.s3queue
+WHERE
+  file_path LIKE '%s3_path_part%' AND
+  -- to filter out irrelevant older attempts, optionally use this
+  processing_start_time > 'YYYY-MM-DD hh:mm:ss'
+ORDER BY processing_start_time DESC;
+```
 #### Get details for several imports
 ```sql
 SELECT
@@ -220,7 +233,7 @@ ORDER BY processing_start_time DESC
 LIMIT 10;
 ```
 
-## Get details for imports for specific table
+#### Get details for imports for specific table
 ```sql
 SELECT
   file_name,
@@ -233,6 +246,24 @@ WHERE database = 'db'
 AND table = 'table'
 ORDER BY processing_start_time DESC;
 ```
+
+#### Get import errors for specific table
+```sql
+SELECT
+  file_name,
+  processing_start_time,
+  processing_end_time,
+  status,
+  -- limit exception length, otherwise things become totally unreadable
+  substring(exception, 1, 255) AS exception
+FROM system.s3queue_log
+WHERE database = 'db'
+AND table LIKE 'table'
+AND length(exception) > 0
+-- add this to prevent printing logs for previous attempts before logic was changed, substituting the timestamp components accordingly to reflect the time where you made the change
+-- AND processing_start_time > 'YYYY-MM-DD hh:mm:ss'
+ORDER BY processing_start_time DESC;
+```
 #### Get details for specific import (useful in case of exception)
 ```sql
 SELECT
@@ -241,8 +272,11 @@ SELECT
   file_name,
   processing_start_time,
   processing_end_time,
-  status, 
-  exception
+  status,
+  -- limit exception length, otherwise things become quite unreadable
+  substring(exception, 1, 255) AS exception
+  -- uncomment this instead if more context is needed
+  -- exception
 FROM system.s3queue_log
 ORDER BY processing_start_time DESC
 LIMIT 1
