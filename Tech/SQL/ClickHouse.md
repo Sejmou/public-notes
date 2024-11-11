@@ -22,6 +22,15 @@ create/edit `.clickhouse-client/config.xml`:
 ## Query Syntax
 ### schema hints (for dynamic data like files stored in S3)
 Add `SETTINGS schema_inference_hints='some_column DataType1, other_column DataType2'` (using actual column name(s) and [accepted datatypes](https://clickhouse.com/docs/en/sql-reference/data-types) instead)
+
+## get NULL count for each column (dynamically!)
+```sql
+FROM db.table -- also works with s3(...), file(...) etc.!
+SELECT COLUMNS('.*')
+APPLY(col -> countIf(col IS NULL))
+FORMAT Vertical;
+```
+
 ### write to local CSV
 ```SQL
 SELECT *  
@@ -278,6 +287,8 @@ SELECT
   -- uncomment this instead if more context is needed
   -- exception
 FROM system.s3queue_log
+WHERE database = 'db'
+AND table LIKE 'table'
 ORDER BY processing_start_time DESC
 LIMIT 1
 FORMAT Vertical;
