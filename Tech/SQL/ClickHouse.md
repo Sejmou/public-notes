@@ -75,6 +75,30 @@ WHERE type = 'QueryFinish'
 FORMAT Vertical;
 ```
 
+### fill missing values
+[docs](https://clickhouse.com/docs/en/sql-reference/statements/select/order-by#order-by-expr-with-fill-modifier)
+
+```sql
+WITH example_data AS (
+  SELECT toFloat32(number % 10) AS n, 'original' AS source  
+  FROM numbers(10) WHERE number % 3 = 1  
+)
+SELECT n, source FROM example_data
+-- FROM, TO and STEP are optional; STEP defaults to 1 for numeric data
+ORDER BY n WITH FILL FROM 0 TO 5.51 STEP 0.5;
+```
+
+it also works with dates :)
+```sql
+SELECT
+    toDate(number * 86400) AS d1,
+    'original' AS source
+FROM numbers(10)
+WHERE (number % 3) = 1
+ORDER BY
+    d1 WITH FILL;
+```
+
 ### Materialized views
 #### Check for update status in refreshable materialized view
 ```sql
